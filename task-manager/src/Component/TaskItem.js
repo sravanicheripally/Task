@@ -1,16 +1,14 @@
-// src/components/TaskList.js
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import axiosInstance from '../axiosConfig';
+import '../css/tasklist.css'; // Import your custom CSS file
 
 const TaskList = () => {
   const [tasks, setTasks] = useState([]);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    // Fetch tasks from the Django API
-    axios
-      .get('http://localhost:8000/tasks/create/', {
-      })
+    axiosInstance
+      .get('/tasks/')
       .then((response) => {
         setTasks(response.data);
       })
@@ -21,19 +19,23 @@ const TaskList = () => {
   }, []);
 
   return (
-    <div>
-      <h2>Task List</h2>
-      {error && <p>{error}</p>}
-      <ul>
+    <div className="container mt-4">
+      <h2 className="mb-4">Task List</h2>
+      {error && <p className="text-danger">{error}</p>}
+      <div className="row">
         {tasks.map((task) => (
-          <li key={task.id}>
-            <h3>{task.title}</h3>
-            <p>{task.description}</p>
-            <p>Status: {task.status}</p>
-            <p>Created on: {new Date(task.creation_date).toLocaleDateString()}</p>
-          </li>
+          <div key={task.id} className="col-md-4 mb-3">
+            <div className="card">
+              <div className="card-body">
+                <h5 className="card-title">{task.title}</h5>
+                <p className="card-text">{task.description}</p>
+                <p className="card-text"><strong>Status:</strong> {task.status}</p>
+                <p className="card-text"><strong>Created on:</strong> {new Date(task.creation_date).toLocaleDateString()}</p>
+              </div>
+            </div>
+          </div>
         ))}
-      </ul>
+      </div>
     </div>
   );
 };

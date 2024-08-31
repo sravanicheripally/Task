@@ -7,8 +7,8 @@ from django.contrib.auth import authenticate,login,logout
 from rest_framework import views,status
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
+from django.views.decorators.csrf import csrf_exempt
 
-# Create your views here .
 class TaskCreateView(generics.CreateAPIView):
     queryset = Task.objects.all()
     serializer_class = TaskSerializer
