@@ -1,4 +1,3 @@
-// src/components/Login.js
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
@@ -6,19 +5,25 @@ import { useNavigate } from 'react-router-dom';
 const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [error, setError] = useState(null); // State to handle errors
   const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    axios.post('http://localhost:8000/api/token/', {
+
+    axios.post('http://localhost:8000/login/', {
       username,
       password,
     })
     .then(response => {
-      localStorage.setItem('token', response.data.access);
-      navigate('/tasks');
+      // Assuming the server returns a token or session info
+      console.log('Login successful:', response.data);
+      navigate('/create-task');
     })
-    .catch(error => console.log(error));
+    .catch(error => {
+      setError('Login failed. Please check your credentials.');
+      console.error('There was an error logging in!', error);
+    });
   };
 
   return (
@@ -39,6 +44,7 @@ const Login = () => {
         />
         <button type="submit">Login</button>
       </form>
+      {error && <p>{error}</p>} {/* Display error message */}
     </div>
   );
 };

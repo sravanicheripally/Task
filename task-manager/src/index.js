@@ -5,7 +5,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import './index.css';
 import App from './App';
 import Navbar from '../src/Component/Navbar';
-import TaskList from '../src/Component/TaskList';
+import TaskList from '../src/Component/TaskItem';
 import TaskCreate from '../src/Component/CreateTask';
 import Login from '../src/Component/Login';
 import Signup from './Component/Signup';
@@ -17,7 +17,7 @@ ReactDOM.render(
     <Navbar />
     <Routes>
       <Route path="/" element={<App />} />
-      <Route path="/tasks" element={<TaskList />} />
+      <Route path="/tasks" element={<TaskList/>} />
       <Route path="/create-task" element={<TaskCreate />} />
       <Route path="/login" element={<Login />} />
       <Route path="/signup" element={<Signup />} />
