@@ -13,6 +13,7 @@ const TaskDelete = ({ taskId, onTaskDeleted }) => {
       setShow(false); // Hide the modal
     } catch (error) {
       console.error('Error deleting task:', error);
+      console.log('taskkk--------------',taskId)
     }
   };
 

@@ -1,11 +1,22 @@
 from rest_framework import serializers
-from .models import Task
 from django.contrib.auth.models import User
+from .models import Task
 
 class TaskSerializer(serializers.ModelSerializer):
+    user = serializers.CharField()  # Accept username as a string
+
     class Meta:
         model = Task
         fields = ['id', 'title', 'description', 'creation_date', 'status', 'user']
+
+    def create(self, validated_data):
+        username = validated_data.pop('user')
+        user = User.objects.filter(username=username).first()
+        if not user:
+            raise serializers.ValidationError({'user': 'User does not exist.'})
+        validated_data['user'] = user
+        return super().create(validated_data)
+
 
 class UserSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True)

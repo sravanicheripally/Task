@@ -1,22 +1,43 @@
 import React, { useEffect, useState } from 'react';
 import axiosInstance from '../axiosConfig';
 import '../css/tasklist.css'; // Import your custom CSS file
+import { useNavigate } from 'react-router-dom';
 
 const TaskList = () => {
   const [tasks, setTasks] = useState([]);
   const [error, setError] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     axiosInstance
       .get('/tasks/')
       .then((response) => {
         setTasks(response.data);
+        console.log(response.data);
       })
       .catch((error) => {
         setError('Failed to fetch tasks');
         console.error(error);
       });
   }, []);
+
+  const handleUpdate = (taskId) => {
+    // Navigate to the update page or open a modal for updating
+    navigate(`/tasks/update/${taskId}`);
+  };
+
+  const handleDelete = (taskId) => {
+    axiosInstance
+      .delete(`/tasks/delete/${taskId}/`)
+      .then(() => {
+        // Remove the deleted task from the state
+        setTasks(tasks.filter((task) => task.id !== taskId));
+      })
+      .catch((error) => {
+        setError('Failed to delete task');
+        console.error(error);
+      });
+  };
 
   return (
     <div className="container mt-4">
@@ -31,6 +52,18 @@ const TaskList = () => {
                 <p className="card-text">{task.description}</p>
                 <p className="card-text"><strong>Status:</strong> {task.status}</p>
                 <p className="card-text"><strong>Created on:</strong> {new Date(task.creation_date).toLocaleDateString()}</p>
+                <button
+                  className="btn btn-primary me-2"
+                  onClick={() => handleUpdate(task.id)}
+                >
+                  Update
+                </button>
+                <button
+                  className="btn btn-danger"
+                  onClick={() => handleDelete(task.id)}
+                >
+                  Delete
+                </button>
               </div>
             </div>
           </div>
