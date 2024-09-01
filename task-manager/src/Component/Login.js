@@ -17,7 +17,7 @@ const Login = () => {
     })
     .then(response => {
       console.log('Login successful:', response.data);
-      navigate('/');
+      navigate('/home');
     })
     .catch(error => {
       setError('Login failed. Please check your credentials.');

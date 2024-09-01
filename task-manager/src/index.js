@@ -16,12 +16,12 @@ ReactDOM.render(
   <Router>
     <Navbar />
     <Routes>
-      <Route path="/" element={<Carousel />} /> {/* Display Carousel on Home */}
+      <Route path="/home" element={<Carousel />} /> {/* Display Carousel on Home */}
       <Route path="/tasks" element={<TaskList />} />
       <Route path="/create-task" element={<TaskCreate />} />
       <Route path="/tasks/update/:taskId" element={<TaskUpdate />} />
       <Route path="/login" element={<Login />} />
-      <Route path="/signup" element={<Signup />} />
+      <Route path="/" element={<Signup />} />
       <Route path="/logout" element={<Logout />} />
     </Routes>
   </Router>,
