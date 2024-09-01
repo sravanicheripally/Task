@@ -141,7 +141,10 @@ CORS_ALLOWED_ORIGINS = [
 
 ]
 
-CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOWED_ORIGINS = [
+    "https://your-frontend-domain.vercel.app",  # Adjust to your actual frontend domain
+]
+
 
 CORS_ALLOW_METHODS = (
     "DELETE",
